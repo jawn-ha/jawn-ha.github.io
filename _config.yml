@@ -87,7 +87,7 @@ exclude_generator:
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://gh_token@github.com/jawn-ha/jawn-ha.github.io.git
+  repository: https://trivas_token@github.com/jawn-ha/jawn-ha.github.io.git
   branch: master
 
 sitemap:
