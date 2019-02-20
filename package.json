@@ -32,7 +32,7 @@
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.1",
-    "hexo-server": "^0.2.0"，
+    "hexo-server": "^0.2.0",
     "yuque-hexo": "^1.4.2"
   },
   "devDependencies": {
