@@ -16,18 +16,18 @@ branches:
     - hexo 
 
 before_install:
-  - npm install -g hexo-cli
+  - git config user.name jawn-ha
+  - git config user.email zhanghuijun125@qq.com
+  - sed -i'' "s~https://github.com/jawn-ha/jawn-ha.github.io.git~https://${Travis_Token}@github.com/jawn-ha/jawn-ha.github.io.git~" _config.yml
 
 # Start: Build Lifecycle
 install:
+  - npm install -g hexo-cli
   - npm install
   - npm install hexo-deployer-git --save
 
 # 执行清缓存，生成网页操作
 script:
-  - git config user.name "jawn-ha"
-  - git config user.email "zhanghuijun125@qq.com"
-  - sed -i'' "s~https://github.com/jawn-ha/jawn-ha.github.io.git~https://${Travis_Token}@github.com/jawn-ha/jawn-ha.github.io.git~" _config.yml
   - npm run deploy
 # End: Build LifeCycle
 
