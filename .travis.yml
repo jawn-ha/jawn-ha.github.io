@@ -27,6 +27,7 @@ install:
 - npm install hexo-cli -g
 - npm install
 
+
 # 部署的命令
 - npm run deploy
 
