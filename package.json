@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "3.9.0"
   },
   "yuqueConfig": {
     "baseUrl": "https://www.yuque.com/api/v2",
@@ -12,17 +12,17 @@
     "mdNameFormat": "title",
     "postPath": "source/_posts/yuque"
   },
-   "scripts": {
+  "scripts": {
     "clean": "hexo clean",
     "clean:yuque": "yuque-hexo clean",
-    "deploy": "yuque-hexo sync && hexo deploy",
+    "deploy": "hexo clean && hexo g -d",
     "publish": "npm run clean && npm run deploy",
     "dev": "hexo s",
     "sync": "yuque-hexo sync",
     "reset": "npm run clean:yuque && npm run sync"
   },
   "dependencies": {
-    "hexo": "^3.8.0",
+    "hexo": "^3.9.0",
     "hexo-deployer-git": "^0.3.1",
     "hexo-generator-archive": "^0.1.4",
     "hexo-generator-category": "^0.1.3",

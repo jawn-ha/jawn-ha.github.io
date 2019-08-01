@@ -5,7 +5,7 @@
 # Site
 title: JawnHa的博客
 subtitle: 
-description: 西安邮电大学14级，前端求职者。
+description: 欲买桂花同载酒，终不似，少年游！
 keywords:
 author: JawnHa
 language:
@@ -80,7 +80,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: yilia
+theme: landscape
 exclude_generator:
 
 # Deployment
