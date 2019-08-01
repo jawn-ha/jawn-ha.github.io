@@ -1,29 +1,36 @@
-# 指定语言环境
+# 配置语言及相应版本
 language: node_js
-# 指定需要sudo权限
-sudo: required
-# 指定node_js版本
-node_js: 
-  - 8
-  
-# 指定博客源码分支，因人而异。hexo博客源码托管在独立repo则不用设置此项
+
+node_js:
+  - "8"
+
+# 项目所在分支
 branches:
   only:
-    - hexo 
-
+  - hexo
+# 配置环境
 before_install:
-  - git config user.name jawn-ha
-  - git config user.email zhanghuijun125@qq.com
-  - sed -i'' "s~https://github.com/jawn-ha/jawn-ha.github.io.git~https://${Travis_Token}@github.com/jawn-ha/jawn-ha.github.io.git~" _config.yml
+# 替换为刚才生成的解密信息
+- openssl aes-256-cbc -K $encrypted_d67408d7ff28_key -iv $encrypted_d67408d7ff28_iv -in id_rsa.enc -out id_rsa -d
+# 改变文件权限
+- chmod 600 ~/.ssh/id_rsa 
+# 配置 ssh
+- eval $(ssh-agent)
+- ssh-add ~/.ssh/id_rsa
+- cp .travis/ssh_config ~/.ssh/config
+# 配置 git 替换为自己的信息
+- git config --global user.name 'jawn-ha'
+- git config --global user.email zhanghuijun125@qq.com
 
-# Start: Build Lifecycle
+# 安装依赖
 install:
-  - npm install -g hexo-cli
-  - npm install
-  - npm install hexo-deployer-git --save
+- npm install hexo-cli -g
+- npm install
 
-# 执行清缓存，生成网页操作
-script:
-  - npm run deploy
-# End: Build LifeCycle
+# 部署的命令
+- npm run deploy
 
+# .travis.yml 配置
+cache:
+  directories:
+    - node_modules
