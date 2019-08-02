@@ -29,7 +29,7 @@ install:
 
 
 # 部署的命令
-- npm run deploy
+- cross-env YUQUE_TOKEN=$yuque_token npm run deploy
 
 # .travis.yml 配置
 cache:
