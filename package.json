@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "hexo clean",
     "clean:yuque": "yuque-hexo clean",
-    "deploy": "hexo clean && hexo g -d",
+    "deploy": "npm run sync && hexo clean && hexo g -d",
     "publish": "npm run clean && npm run deploy",
     "dev": "hexo s",
     "sync": "yuque-hexo sync",
@@ -32,10 +32,9 @@
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.1",
-    "hexo-server": "^0.2.0",
-    "yuque-hexo": "^1.4.2"
+    "hexo-server": "^0.2.0"
   },
   "devDependencies": {
-    "yuque-hexo": "^1.4.2"
+    "yuque-hexo": "^1.6.1"
   }
 }
