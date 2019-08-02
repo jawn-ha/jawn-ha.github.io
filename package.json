@@ -10,6 +10,8 @@
     "login": "danhangdao-kozn6",
     "repo": "pgf45m",
     "mdNameFormat": "title",
+    "adapter": "hexo",
+    "cachePath": "yuque.json",
     "postPath": "source/_posts/yuque"
   },
   "scripts": {
@@ -17,7 +19,7 @@
     "clean:yuque": "yuque-hexo clean",
     "deploy": "npm run sync && hexo clean && hexo g -d",
     "publish": "npm run clean && npm run deploy",
-    "dev": "hexo s",
+    "dev": "hexo clean && hexo server",
     "sync": "yuque-hexo sync",
     "reset": "npm run clean:yuque && npm run sync"
   },
