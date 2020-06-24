@@ -79,6 +79,10 @@ pagination_dir: page
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
+plugin:
+- hexo-generator-feed
+#Feed Atom
+
 ## Themes: https://hexo.io/themes/
 theme: next
 exclude_generator:
@@ -98,7 +102,7 @@ baidusitemap:
 feed:
     type: atom
     path: atom.xml
-    limit: 100
+    limit: 20
 
 jsonContent:
   meta: false
@@ -118,3 +122,22 @@ jsonContent:
     excerpt: false
     categories: false
     tags: true
+# 增加live2d的配置
+live2d:
+  enable: true
+  scriptFrom: local
+  pluginRootPath: live2dw/
+  pluginJsPath: lib/
+  pluginModelPath: assets/
+  tagMode: false
+  debug: false
+  model:
+    use: live2d-widget-model-shizuku
+  display:
+    position: right
+    width: 150
+    height: 300
+  mobile:
+    show: true
+  react:
+    opacity: 0.7
