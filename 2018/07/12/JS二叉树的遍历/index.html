@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="JawnHa的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="二叉查找树（Binary Sort Tree）今天我们将学习计算机中经常用到的一种非线性的数据结构——树（Tree），由于其存储的所有元素之间具有明显的层次特性，因此常被用来存储具有层级关系的数据，比如文件系统中的文件；也会被用来存储有序列表等。 在树结构中，每一个结点只有一个前件，称为父结点，没有前件的结点只有一个，称为树的根结点，简称树的根（root）。每一个结点可以有多个后件，称为该结点的子">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS二叉树的遍历">
+<meta property="og:url" content="https://jawn-ha.github.com/2018/07/12/JS二叉树的遍历/index.html">
+<meta property="og:site_name" content="JawnHa的博客">
+<meta property="og:description" content="二叉查找树（Binary Sort Tree）今天我们将学习计算机中经常用到的一种非线性的数据结构——树（Tree），由于其存储的所有元素之间具有明显的层次特性，因此常被用来存储具有层级关系的数据，比如文件系统中的文件；也会被用来存储有序列表等。 在树结构中，每一个结点只有一个前件，称为父结点，没有前件的结点只有一个，称为树的根结点，简称树的根（root）。每一个结点可以有多个后件，称为该结点的子">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-11/bedfd16ede6b68832ee2ab943ba32334.webp">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-11/2.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-11/3.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-11/4.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-11/5.png">
+<meta property="og:updated_time" content="2020-06-24T07:22:51.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS二叉树的遍历">
+<meta name="twitter:description" content="二叉查找树（Binary Sort Tree）今天我们将学习计算机中经常用到的一种非线性的数据结构——树（Tree），由于其存储的所有元素之间具有明显的层次特性，因此常被用来存储具有层级关系的数据，比如文件系统中的文件；也会被用来存储有序列表等。 在树结构中，每一个结点只有一个前件，称为父结点，没有前件的结点只有一个，称为树的根结点，简称树的根（root）。每一个结点可以有多个后件，称为该结点的子">
+<meta name="twitter:image" content="https://jawn-ha.github.com/images/2018-7-11/bedfd16ede6b68832ee2ab943ba32334.webp">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jawn-ha.github.com/2018/07/12/JS二叉树的遍历/">
+
+
+
+
+
+  <title>JS二叉树的遍历 | JawnHa的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JawnHa的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jawn-ha.github.com/2018/07/12/JS二叉树的遍历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JawnHa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JawnHa的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JS二叉树的遍历</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T19:02:33+00:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="二叉查找树（Binary-Sort-Tree）"><a href="#二叉查找树（Binary-Sort-Tree）" class="headerlink" title="二叉查找树（Binary Sort Tree）"></a>二叉查找树（Binary Sort Tree）</h3><p>今天我们将学习计算机中经常用到的一种非线性的数据结构——树（<strong>Tree</strong>），由于其存储的所有元素之间具有明显的层次特性，因此常被用来存储具有层级关系的数据，比如文件系统中的文件；也会被用来存储有序列表等。</p>
+<p>在树结构中，每一个结点只有一个前件，称为父结点，没有前件的结点只有一个，称为树的<strong>根结点</strong>，简称树的<strong>根</strong>（root）。每一个结点可以有多个后件，称为该结点的子结点。没有后件的结点称为叶子结点。一个结点所拥有的子结点的个数称为该结点的度，所有结点中最大的度称为树的度。树的最大层次称为树的深度。</p>
+<a id="more"></a>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>二叉树是一种特殊的树，它的子节点个数不超过两个，且分别称为该结点的左子树（left subtree）与右子树（right subtree），二叉树常被用作二叉查找树和二叉堆或是二叉排序树（BST）。</p>
+<p><img src="/images/2018-7-11/bedfd16ede6b68832ee2ab943ba32334.webp" alt="二叉树"></p>
+<p>按一定的规则和顺序走遍二叉树的所有结点，使每一个结点都被访问一次，而且只被访问一次，这个操作被称为树的遍历，是对树的一种最基本的运算。由于二叉树是非线性结构，因此，树的遍历实质上是将二叉树的各个结点转换成为一个线性序列来表示。</p>
+<p>按照根节点访问的顺序不同，树的遍历分为以下三种：前序遍历，中序遍历，后序遍历；</p>
+<p>前序遍历：根节点-&gt;左子树-&gt;右子树</p>
+<p> <img src="/images/2018-7-11/2.png" alt="先序遍历"></p>
+<p>中序遍历：左子树-&gt;根节点-&gt;右子树</p>
+<p><img src="/images/2018-7-11/3.png" alt></p>
+<p>后序遍历：左子树-&gt;右子树-&gt;根节点 </p>
+<p> <img src="/images/2018-7-11/4.png" alt></p>
+<p>因此我们可以得之上面二叉树的遍历结果如下：<br> 前序遍历：ABDEFGC<br> 中序遍历：DEBGFAC<br> 后序遍历：EDGFBCA</p>
+<h2 id="二叉查找树（BST）"><a href="#二叉查找树（BST）" class="headerlink" title="二叉查找树（BST）"></a>二叉查找树（BST）</h2><p>实际应用中，树的每个节点都会有一个与之相关的值对应，有时候会被称为<strong>键</strong>。因此，我们在构建二叉查找树的时候，确定子节点非常的重要，通常将相对较小的值保存在左节点中，较大的值保存在右节点中，这就使得查找的效率非常高，因此被广泛使用。</p>
+<h2 id="二叉查找树的实现"><a href="#二叉查找树的实现" class="headerlink" title="二叉查找树的实现"></a>二叉查找树的实现</h2><p>根据上面的知识，我们了解到二叉树实际上是由多个节点组成，因此我们首先就要定义一个Node类，用于存放树的节点，其构造与前面的<a href="https://www.jianshu.com/p/f254ec665e57" target="_blank" rel="noopener">链表</a>类似。Node类的定义如下：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//节点定义</span></span><br><span class="line"></span><br><span class="line">function Node (<span class="keyword">data</span> , left , right) &#123;</span><br><span class="line">    <span class="keyword">this</span>.<span class="keyword">data</span> = <span class="keyword">data</span>;       <span class="comment">// 数据</span></span><br><span class="line">    <span class="keyword">this</span>.left = left;       <span class="comment">// 左节点</span></span><br><span class="line">    <span class="keyword">this</span>.right = right;     <span class="comment">// 右节点</span></span><br><span class="line">    <span class="keyword">this</span>.show = show;       <span class="comment">// 显示节点数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function show()&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.<span class="keyword">data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Node对象既保存了数据，也保存了它的左节点和右节点的链接，其中 show 方法用来显示当前保存在节点中数据。</p>
+<p>现在我们可以创建一个类，用来表示二叉查找数（BST），我们初始化类只包含一个成员，一个表示二叉查找树根节点的 Node 对象，初始化为 null ， 表示创建一个空节点。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//二叉查找树（BST）的类</span></span><br><span class="line"></span><br><span class="line">function BST()&#123;</span><br><span class="line">    <span class="keyword">this</span>.root = <span class="literal">null</span>;           <span class="comment">// 根节点</span></span><br><span class="line">    <span class="keyword">this</span>.insert = insert;       <span class="comment">// 插入节点</span></span><br><span class="line">    <span class="keyword">this</span>.preOrder = preOrder;   <span class="comment">// 先序遍历</span></span><br><span class="line">    <span class="keyword">this</span>.inOrder = inOrder;     <span class="comment">// 中序遍历</span></span><br><span class="line">    <span class="keyword">this</span>.postOrder = postOrder; <span class="comment">// 后序遍历</span></span><br><span class="line">    <span class="keyword">this</span>.find = find;           <span class="comment">// 查找节点</span></span><br><span class="line">    <span class="keyword">this</span>.getMin = getMin;       <span class="comment">// 查找最小值</span></span><br><span class="line">    <span class="keyword">this</span>.getMax = getMax;       <span class="comment">// 查找最大值</span></span><br><span class="line">    <span class="keyword">this</span>.remove = remove;       <span class="comment">// 删除节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，我们需要为我们的类添加方法。</p>
+<p>首先就是 insert 方法，向树中添加一个新节点，我们一起来看看这个方法；</p>
+<p><strong>insert：向树中添加新节点</strong></p>
+<p>因为添加节点会涉及到插入位置的问题，必须将其放到正确的位置上，才能保证树的正确性，整个过程较为复杂，我们一起来梳理一下：</p>
+<p>首先要添加新的节点，首先需要创建一个Node对象，将数据传入该对象。</p>
+<p>其次要检查当前的BST树是否有根节点，如果没有，那么表示是一棵新数，该节点就为该树的根节点，那么插入这个过程就结束了；否则，就要继续进行下一步了。</p>
+<p>如果待插入节点不是根节点，那么就必须对BST进行遍历，找到合适的位置。该过程类似遍历链表，用一个变量存储当前节点，一层一层遍历BST，算法如下：</p>
+<ol>
+<li>设值当前节点为根节点</li>
+<li>如果待插入节点保存的数据小于当前节点，则新节点为原节点的左节点，反之，执行第4步</li>
+<li>如果当前节点的左节点为null，就将新节点放到这个位置，退出循环；反之，继续执行下一次循环</li>
+<li>设置新节点为原节点的右节点</li>
+<li>如果当前节点的右节点为null，就将新节点放到这个位置，退出循环；反之，继续执行下一次循环</li>
+</ol>
+<p>这样，就能保证每次添加的新节点能够放到正确的位置上，具体实现如下；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入新节点</span></span><br><span class="line"></span><br><span class="line">function insert(<span class="keyword">data</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> n = new Node( <span class="keyword">data</span> , <span class="literal">null</span> , <span class="literal">null</span> );</span><br><span class="line">    <span class="keyword">if</span>( <span class="keyword">this</span>.root == <span class="literal">null</span> )&#123;</span><br><span class="line">        <span class="keyword">this</span>.root = n;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> current = <span class="keyword">this</span>.root;</span><br><span class="line">        <span class="keyword">var</span> parent;</span><br><span class="line">        <span class="keyword">while</span>( <span class="literal">true</span> )&#123;</span><br><span class="line">            parent = current;</span><br><span class="line">            <span class="keyword">if</span>( <span class="keyword">data</span> &lt; current.<span class="keyword">data</span> )&#123;</span><br><span class="line">                current = current.left;</span><br><span class="line">                <span class="keyword">if</span>( current == <span class="literal">null</span> )&#123;</span><br><span class="line">                    parent.left = n ;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                current = current.right;</span><br><span class="line">                <span class="keyword">if</span>( current == <span class="literal">null</span> )&#123;</span><br><span class="line">                    parent.right = n;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在BST类已初步成型，但操作还仅仅限于插入节点，我们需要有遍历BST的能力，上面我们也提到了是三种遍历方式。其中中序遍历是最容易实现的，我们需要升序的方法访问树中的所有节点，先访问左子树，在访问根节点，最后是右子树，我们采用递归来实现！</p>
+<p><strong>inOrder：中序遍历</strong></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> // 中序遍历</span><br><span class="line"> </span><br><span class="line">function inOrder (<span class="keyword">node</span><span class="title">) &#123;</span></span><br><span class="line"><span class="title">    if</span>( !(<span class="keyword">node</span> <span class="title">== null</span> ))&#123;</span><br><span class="line">        inOrder( <span class="keyword">node</span>.<span class="title">left</span> );</span><br><span class="line">        console.debug( <span class="keyword">node</span>.<span class="title">show</span>() + ' ');</span><br><span class="line">        inOrder( <span class="keyword">node</span>.<span class="title">right</span> );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>怎么样，了解了原理，实现起来还是蛮简单的~</p>
+<p>我们用一段代码来测试一下我们所写的中序遍历：</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nums = <span class="function"><span class="keyword">new</span> <span class="title">BST</span>();</span></span><br><span class="line"><span class="function"><span class="comment">//插入数据</span></span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">23</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">45</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">16</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">37</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">3</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">99</span>);</span></span><br><span class="line"><span class="function"><span class="title">nums</span>.<span class="title">insert</span>(<span class="number">22</span>);</span></span><br></pre></td></tr></table></figure>
+<p>上述插入数据后，会形成如下的二叉树</p>
+<p> <img src="/images/2018-7-11/5.png" alt></p>
+<p>中序遍历结果如下：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//中序遍历</span></span><br><span class="line">console.log(<span class="string">"Inorder traversal: "</span>);</span><br><span class="line"><span class="keyword">in</span><span class="constructor">Order(<span class="params">nums</span>.<span class="params">root</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Inorder traversal:</span></span><br><span class="line"><span class="comment">// 3 16 22 23 37 45 99</span></span><br></pre></td></tr></table></figure>
+<p><strong>preOrder：先序遍历</strong></p>
+<p>有了中序遍历的基础，相信先序遍历的实现你已经想出来，怎么样？看看对吗？</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//先序遍历</span><br><span class="line"></span><br><span class="line">function preOrder( <span class="keyword">node</span> <span class="title">) &#123;</span></span><br><span class="line"><span class="title">    if</span>( !(<span class="keyword">node</span> <span class="title">== null</span> ))&#123;</span><br><span class="line">        console.log( <span class="keyword">node</span>.<span class="title">show</span>() + ' ');</span><br><span class="line">        preOrder( <span class="keyword">node</span>.<span class="title">left</span> );</span><br><span class="line">        preOrder( <span class="keyword">node</span>.<span class="title">right</span> );</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>怎么样，看起来是不是和中序遍历差不多，唯一的区别就是 if 语句中代码的执行顺序，中序遍历中 show 方法放在两个递归调用之间，先序遍历则放在递归调用之前。</p>
+<p>先序遍历结果如下：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先序遍历</span></span><br><span class="line"></span><br><span class="line">console.log(<span class="string">"Preorder traversal: "</span>);</span><br><span class="line">pre<span class="constructor">Order(<span class="params">nums</span>.<span class="params">root</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Preorder traversal:</span></span><br><span class="line"><span class="comment">// 23 16 3 22 45 37 99</span></span><br></pre></td></tr></table></figure>
+<p><strong>postOrder：后序遍历</strong></p>
+<p>后序遍历的实现和前面的基本相同，将 show 方法放在递归调用之后执行即可</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//后序遍历</span><br><span class="line"> </span><br><span class="line">function postOrder ( <span class="keyword">node</span> <span class="title">) &#123;</span></span><br><span class="line"><span class="title">    if</span>( !(<span class="keyword">node</span> <span class="title">== null</span> ) )&#123;</span><br><span class="line">        postOrder( <span class="keyword">node</span>.<span class="title">left</span> );</span><br><span class="line">        postOrder( <span class="keyword">node</span>.<span class="title">right</span> );</span><br><span class="line">        console.log( <span class="keyword">node</span>.<span class="title">show</span>() + ' ');</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后序遍历结果如下：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 后序遍历</span></span><br><span class="line"></span><br><span class="line">console.log(<span class="string">"Postorder traversal: "</span>);</span><br><span class="line">post<span class="constructor">Order(<span class="params">nums</span>.<span class="params">root</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Postorder traversal:</span></span><br><span class="line"><span class="comment">// 3 22 16 37 99 45 23</span></span><br></pre></td></tr></table></figure>
+<h2 id="二叉查找树的查找运算"><a href="#二叉查找树的查找运算" class="headerlink" title="二叉查找树的查找运算"></a>二叉查找树的查找运算</h2><p>对于BST通常有一下三种的查找类型：</p>
+<ol>
+<li>查找给定值</li>
+<li>查找最大值</li>
+<li>查找最小值</li>
+</ol>
+<p>我们接下来一起来讨论三种查找的方式的实现。</p>
+<p>要查找BST中的最小值和最大值是非常简单的。因为较小的值总是在左子节点上，要想查找BST中的最小值，只需遍历左子树，直到找到最后一个节点即可。同理，查找最大值，只需遍历右子树，直到找到最后一个节点即可。</p>
+<p><strong>getMin：查找最小值</strong></p>
+<p>遍历左子树，直到左子树的某个节点的 left 为 null 时，该节点保存的即为最小值</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//查找最小值</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> getMin( ) &#123;</span><br><span class="line">    var <span class="keyword">current</span> = this.root;</span><br><span class="line">    <span class="keyword">while</span> ( !( <span class="keyword">current</span>.left == <span class="keyword">null</span> ) )&#123;</span><br><span class="line">        <span class="keyword">current</span> = <span class="keyword">current</span>.left;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">current</span>.<span class="keyword">show</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>getMax：查找最大值</strong></p>
+<p>遍历右子树，直到右子树的某个节点的 right 为 null 时，该节点保存的即为最大值</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//查找最大值</span><br><span class="line"> </span><br><span class="line"><span class="keyword">function</span> getMax () &#123;</span><br><span class="line">    var <span class="keyword">current</span> = this.root;</span><br><span class="line">    <span class="keyword">while</span> ( !( <span class="keyword">current</span>.right == <span class="keyword">null</span> ) ) &#123;</span><br><span class="line">        <span class="keyword">current</span> = <span class="keyword">current</span>.right;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">current</span>.<span class="keyword">show</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们还是利用前面构建的树来测试：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 最小值</span></span><br><span class="line">console.<span class="built_in">log</span>('min:' + nums.getMin() );       <span class="comment">// min : 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//最大值</span></span><br><span class="line">console.<span class="built_in">log</span>('max:' + nums.getMax() );       <span class="comment">// max : 99</span></span><br></pre></td></tr></table></figure>
+<p>在BST上查找给定值，需要比较给定值和当前节点保存的值的大小，通过比较，就能确定给定值在不在当前节点，根据BST的特点，qu接下来是向左还是向右遍历；</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找给定值</span></span><br><span class="line"></span><br><span class="line">function find ( <span class="keyword">data</span> ) &#123;</span><br><span class="line">    <span class="keyword">var</span> current = <span class="keyword">this</span>.root;</span><br><span class="line">    <span class="keyword">while</span> ( current != <span class="literal">null</span> )&#123;</span><br><span class="line">        <span class="keyword">if</span>( current.<span class="keyword">data</span> == <span class="keyword">data</span> )&#123;</span><br><span class="line">            <span class="keyword">return</span> current;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>( current.<span class="keyword">data</span> &lt; <span class="keyword">data</span> )&#123;</span><br><span class="line">            current = current.right;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            current = current.left;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果找到给定值，该方法返回保存该值的节点，反之返回null；</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找不存在的值</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'find:'</span> + nums.<span class="built_in">find</span>(<span class="number">66</span>));       <span class="comment">// find : null</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//查找存在的值</span></span><br><span class="line">console.<span class="built_in">log</span>(<span class="string">'find:'</span> + nums.<span class="built_in">find</span>(<span class="number">99</span>) );      <span class="comment">// find : [object Object]</span></span><br></pre></td></tr></table></figure>
+<h2 id="二叉查找树的删除运算"><a href="#二叉查找树的删除运算" class="headerlink" title="二叉查找树的删除运算"></a>二叉查找树的删除运算</h2><p>从BST中删除节点的操作最为复杂，其复杂程度取决于删除的节点位置。如果待删除的节点没有子节点，那么非常简单。如果删除包含左子节点或者右子节点，就变得稍微有些复杂。如果删除包含两个节点的节点最为复杂。</p>
+<p>我们采用递归方法，来完成复杂的删除操作，我们定义 remove() 和 removeNode() 两个方法；算法思想如下：</p>
+<ol>
+<li>首先判断当前节点是否包含待删除的数据，如果包含，则删除该节点；如果不包含，则比较当前节点上的数据和待删除树的的大小关系。如果待删除的数据小于当前节点的数据，则移至当前节点的左子节点继续比较；如果大于，则移至当前节点的右子节点继续比较。</li>
+<li>如果待删除节点是叶子节点（没有子节点），那么只需要将从父节点指向它的链接指向变为null；</li>
+<li>如果待删除节点含有一个子节点，那么原本指向它的节点需要做调整，使其指向它的子节点；</li>
+<li>最后，如果待删除节点包含两个子节点，可以选择查找待删除节点左子树上的最大值或者查找其右子树上的最小值，这里我们选择后一种。</li>
+</ol>
+<p>因此，我们需要一个查找树上最小值的方法，后面会用它找到最小值创建一个临时节点，将临时节点上的值复制到待删除节点，然后再删除临时节点；</p>
+<p>我们上面说会用到两个方法，其中 remove 方法只是简单的接收待删除数据，调用 removeNode 删除它，主要工作在 removeNode 中完成，定义如下：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//删除操作</span><br><span class="line"></span><br><span class="line">function remove( data ) &#123;</span><br><span class="line">    removeNode( this.root , data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//查找最小值</span><br><span class="line"></span><br><span class="line">function getSmallest(<span class="keyword">node</span><span class="title">) &#123;</span></span><br><span class="line"><span class="title">    if</span> (<span class="keyword">node</span>.<span class="title">left</span> == null) &#123;</span><br><span class="line">        return <span class="keyword">node</span><span class="title">;</span></span><br><span class="line"><span class="title">    &#125;</span></span><br><span class="line"><span class="title">    else</span> &#123;</span><br><span class="line">        return getSmallest(<span class="keyword">node</span>.<span class="title">left</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//删除节点</span><br><span class="line">function removeNode( <span class="keyword">node</span> <span class="title">, data</span> ) &#123;</span><br><span class="line">    if( <span class="keyword">node</span> <span class="title">== null</span> ) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line">    if(data == <span class="keyword">node</span>.<span class="title">data</span>) &#123;</span><br><span class="line">        // 没有子节点的节点</span><br><span class="line">        if(<span class="keyword">node</span>.<span class="title">left</span> == null &amp;&amp; <span class="keyword">node</span>.<span class="title">right</span> == null) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        // 没有左子节点的节点</span><br><span class="line">        if(<span class="keyword">node</span>.<span class="title">left</span> == null) &#123;</span><br><span class="line">            return <span class="keyword">node</span>.<span class="title">right</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        // 没有右子节点的节点</span><br><span class="line">        if(<span class="keyword">node</span>.<span class="title">right</span> == null) &#123;</span><br><span class="line">            return <span class="keyword">node</span>.<span class="title">left</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        // 有<span class="number">2</span>个子节点的节点</span><br><span class="line">        var tempNode = getSmallest(<span class="keyword">node</span>.<span class="title">right</span>);</span><br><span class="line">        <span class="keyword">node</span>.<span class="title">data</span> = tempNode.data;</span><br><span class="line">        <span class="keyword">node</span>.<span class="title">right</span> = removeNode(<span class="keyword">node</span>.<span class="title">right</span>,tempNode.data);</span><br><span class="line">        return <span class="keyword">node</span><span class="title">;</span></span><br><span class="line"><span class="title"></span></span><br><span class="line"><span class="title">    &#125;else</span> if(data <span class="tag">&lt; node.data) &#123;</span></span><br><span class="line"><span class="tag">        node.left = removeNode( node.left,data);</span></span><br><span class="line"><span class="tag">        return node;</span></span><br><span class="line"><span class="tag">    &#125;else &#123;</span></span><br><span class="line"><span class="tag">        node.right = removeNode( node.right,data);</span></span><br><span class="line"><span class="tag">        return node;</span></span><br><span class="line"><span class="tag">    &#125;</span></span><br><span class="line"><span class="tag">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>现在我们来删除节点试试。</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除根节点</span></span><br><span class="line">nums.remove(<span class="number">23</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">in</span><span class="constructor">Order(<span class="params">nums</span>.<span class="params">root</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3 16 22 37 45 99</span></span><br></pre></td></tr></table></figure>
+<p>成功了！<br> 现在，我们的BST算是完整了。</p>
+<p>我们现在已经可以利用js是实现一个简单的BST了，实际中树的使用会很广泛，希望大家能多去了解了解树的数据结构，多动手实践，相信你会有不少的收获！</p>
+<blockquote>
+<p>作者：Cryptic</p>
+<p>来源：稀土掘金</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/12/JS排序算法/" rel="next" title="JS排序算法">
+                <i class="fa fa-chevron-left"></i> JS排序算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/18/最近面试题总结/" rel="prev" title="最近面试题总结 HTML+CSS篇">
+                最近面试题总结 HTML+CSS篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="JawnHa">
+            
+              <p class="site-author-name" itemprop="name">JawnHa</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉查找树（Binary-Sort-Tree）"><span class="nav-number">1.</span> <span class="nav-text">二叉查找树（Binary Sort Tree）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树"><span class="nav-number">2.</span> <span class="nav-text">二叉树</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树（BST）"><span class="nav-number"></span> <span class="nav-text">二叉查找树（BST）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树的实现"><span class="nav-number"></span> <span class="nav-text">二叉查找树的实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树的查找运算"><span class="nav-number"></span> <span class="nav-text">二叉查找树的查找运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树的删除运算"><span class="nav-number"></span> <span class="nav-text">二叉查找树的删除运算</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JawnHa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

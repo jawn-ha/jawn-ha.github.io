@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="JawnHa的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="链表在很多编程语言中，数组的长度都是固定的，如果数组已被数据填满，再要加入新的元素是非常困难的。而且，对于数组的删除和添加操作，通常需要将数组中的其他元素向前或者向后平移，这些操作也是十分繁琐的。 然而，JS中数组却不存在上述问题，主要是因为他们被实现了成了对象，但是与其他语言相比（比如C或Java），那么它的效率会低很多。">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS数据结构之链表">
+<meta property="og:url" content="https://jawn-ha.github.com/2018/07/07/JS数据结构之链表/index.html">
+<meta property="og:site_name" content="JawnHa的博客">
+<meta property="og:description" content="链表在很多编程语言中，数组的长度都是固定的，如果数组已被数据填满，再要加入新的元素是非常困难的。而且，对于数组的删除和添加操作，通常需要将数组中的其他元素向前或者向后平移，这些操作也是十分繁琐的。 然而，JS中数组却不存在上述问题，主要是因为他们被实现了成了对象，但是与其他语言相比（比如C或Java），那么它的效率会低很多。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-7/1.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-7/2.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-7/3.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-7/4.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-7/5.png">
+<meta property="og:updated_time" content="2020-06-24T07:22:51.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS数据结构之链表">
+<meta name="twitter:description" content="链表在很多编程语言中，数组的长度都是固定的，如果数组已被数据填满，再要加入新的元素是非常困难的。而且，对于数组的删除和添加操作，通常需要将数组中的其他元素向前或者向后平移，这些操作也是十分繁琐的。 然而，JS中数组却不存在上述问题，主要是因为他们被实现了成了对象，但是与其他语言相比（比如C或Java），那么它的效率会低很多。">
+<meta name="twitter:image" content="https://jawn-ha.github.com/images/2018-7-7/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jawn-ha.github.com/2018/07/07/JS数据结构之链表/">
+
+
+
+
+
+  <title>JS数据结构之链表 | JawnHa的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JawnHa的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jawn-ha.github.com/2018/07/07/JS数据结构之链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JawnHa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JawnHa的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JS数据结构之链表</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-07T23:07:37+00:00">
+                2018-07-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>在很多编程语言中，数组的长度都是固定的，如果数组已被数据填满，再要加入新的元素是非常困难的。而且，对于数组的删除和添加操作，通常需要将数组中的其他元素向前或者向后平移，这些操作也是十分繁琐的。</p>
+<p>然而，JS中数组却不存在上述问题，主要是因为他们被实现了成了对象，但是与其他语言相比（比如C或Java），那么它的效率会低很多。</p>
+<a id="more"></a>
+<p>这时候，我们可以考虑使用链表(Linked-list) 来替代它，除了对数据的随机访问，链表几乎可以在任何可以使用一维数组的情况中。如果你正巧在使用C或者Java等高级语言，你会发现链表的表现要优于数组很多。</p>
+<p>链表其实有许多的种类：单向链表、双向链表、单向循环链表和双向循环链表，接下来，我们基于对象来实现一个单向链表，因为它的使用最为广泛。</p>
+<h3 id="链表的定义"><a href="#链表的定义" class="headerlink" title="链表的定义"></a>链表的定义</h3><p><img src="/images/2018-7-7/1.png" alt="链表结构图"></p>
+<p>向链表中<strong>插入一个节点</strong>的效率很高，需要修改它前面的节点(前驱)，使其指向新加入的节点，而将新节点指向原来前驱节点指向的节点即可。下面我将用图片演示如何在 data2 节点 后面插入 data4 节点。</p>
+<p><img src="/images/2018-7-7/2.png" alt></p>
+<p> 同样，从链表中删除一个节点，也很简单。只需将待删节点的前驱节点指向待删节点的，同时将待删节点指向null，那么节点就删除成功了。下面我们用图片演示如何从链表中删除 data4 节点。</p>
+<p> <img src="/images/2018-7-7/3.png" alt="删除节点"></p>
+<h3 id="链表的设计"><a href="#链表的设计" class="headerlink" title="链表的设计"></a>链表的设计</h3><p>我们设计链表包含两个类，一个是 Node 类用来表示节点，另一个事 LinkedList 类提供插入节点、删除节点等一些操作。</p>
+<p><strong>Node类</strong></p>
+<p>Node类包含连个属性： element 用来保存节点上的数据，next 用来保存指向下一个节点的链接，具体实现如下：</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//节点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span>(<span class="params">element</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.element = element;   <span class="comment">//当前节点的元素</span></span><br><span class="line">    <span class="keyword">this</span>.next = <span class="literal">null</span>;         <span class="comment">//下一个节点链接</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>LinkedList类</strong></p>
+<p>LinkedList类提供了对链表进行操作的方法，包括插入删除节点，查找给定的值等。值得注意的是，它只有一个<br>属性，那就是使用一个 Node 对象来保存该链表的头节点。</p>
+<p>它的构造函数的实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//链表类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LList</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.head = <span class="keyword">new</span> Node( <span class="string">'head'</span> );     <span class="comment">//头节点</span></span><br><span class="line">    <span class="keyword">this</span>.find = find;                   <span class="comment">//查找节点</span></span><br><span class="line">    <span class="keyword">this</span>.insert = insert;               <span class="comment">//插入节点</span></span><br><span class="line">    <span class="keyword">this</span>.remove = remove;               <span class="comment">//删除节点</span></span><br><span class="line">    <span class="keyword">this</span>.findPrev = findPrev;           <span class="comment">//查找前一个节点</span></span><br><span class="line">    <span class="keyword">this</span>.display = display;             <span class="comment">//显示链表</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>head节点的next属性初始化为 null ，当有新元素插入时，next会指向新的元素。</p>
+<p>接下来，我们来看看具体方法的实现。</p>
+<p><strong>insert：向链表插入一个节点</strong></p>
+<p>我们先分析分析insert方法，想要插入一个节点，我们必须明确要在哪个节点的前面或后面插入。我们先来看看，如何在一个已知节点的后面插入一个节点。</p>
+<p>在一个已知节点后插入新节点，我们首先得找到该节点，为此，我们需要一个 find 方法用来遍历链表，查找给定的数据。如果找到，该方法就返回保存该数据的节点。那么，我们先实现 find 方法。</p>
+<p><strong>find：查找给定节点</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找给定节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span> (<span class="params"> item </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="keyword">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( currNode.element != item )&#123;</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> currNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> find 方法同时展示了如何在链表上移动。首先，创建一个新节点，将链表的头节点赋给这个新创建的节点，然后在链表上循环，如果当前节点的 element 属性和我们要找的信息不符，就将当前节点移动到下一个节点，如果查找成功，该方法返回包含该数据的节点；否则，就会返回null。</p>
+<p>一旦找到了节点，我们就可以将新的节点插入到链表中了，将新节点的 next 属性设置为后面节点的 next 属性对应的值，然后设置后面节点的 next 属性指向新的节点，具体实现如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insert</span> (<span class="params"> newElement , item </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> newNode = <span class="keyword">new</span> Node( newElement );</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="keyword">this</span>.find( item );</span><br><span class="line">    newNode.next = currNode.next;</span><br><span class="line">    currNode.next = newNode;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 现在我们可以测试我们的链表了。等等，我们先来定义一个 display 方法显示链表的元素，不然我们怎么知道对不对呢？</p>
+<p><strong>display：显示链表</strong></p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//显示链表元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">display</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="keyword">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( !(currNode.next == <span class="literal">null</span>) )&#123;</span><br><span class="line">        <span class="built_in">console</span>.log( currNode.next.element );</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实现原理同上，将头节点赋给一个新的变量，然后循环链表，直到当前节点的 next 属性为 null 时停止循环，我们循环过程中将每个节点的数据打印出来就好了。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fruits = <span class="keyword">new</span> LList();</span><br><span class="line"></span><br><span class="line">fruits.insert(<span class="string">'Apple'</span> , <span class="string">'head'</span>);</span><br><span class="line">fruits.insert(<span class="string">'Banana'</span> , <span class="string">'Apple'</span>);</span><br><span class="line">fruits.insert(<span class="string">'Pear'</span> , <span class="string">'Banana'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(fruits.display());       <span class="comment">// Apple</span></span><br><span class="line">                                     <span class="comment">// Banana</span></span><br><span class="line">                                     <span class="comment">// Pear</span></span><br></pre></td></tr></table></figure>
+<p><strong>remove：从链表中删除一个节点</strong></p>
+<p>从链表中删除节点时，我们先要找个待删除节点的前一个节点，找到后，我们修改它的 next 属性，使其不在指向待删除的节点，而是待删除节点的下一个节点。那么，我们就得需要定义一个 findPrevious 方法遍历链表，检查每一个节点的下一个节点是否存储待删除的数据。如果找到，返回该节点，这样就可以修改它的 next 属性了。 findPrevious 的实现如下：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//查找带删除节点的前一个节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findPrev</span><span class="params">( item )</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="keyword">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( !( currNode.next == <span class="literal">null</span>) &amp;&amp; ( currNode.next.element != item ))&#123;</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> currNode;</span><br><span class="line">&#125;。</span><br></pre></td></tr></table></figure>
+<p>这样，remove 方法的实现也就迎刃而解了</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">remove</span> (<span class="params"> item </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> prevNode = <span class="keyword">this</span>.findPrev( item );</span><br><span class="line">    <span class="keyword">if</span>( !( prevNode.next == <span class="literal">null</span> ) )&#123;</span><br><span class="line">        prevNode.next = prevNode.next.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们接着写一段测试程序，测试一下 remove 方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 接着上面的代码，我们再添加一个水果</span></span><br><span class="line"></span><br><span class="line">fruits.insert(<span class="string">'Grape'</span> , <span class="string">'Pear'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(fruits.display());      <span class="comment">// Apple</span></span><br><span class="line">                                    <span class="comment">// Banana</span></span><br><span class="line">                                    <span class="comment">// Pear</span></span><br><span class="line">                                    <span class="comment">// Grape</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 我们把香蕉吃掉</span></span><br><span class="line"></span><br><span class="line">fruits.remove(<span class="string">'Banana'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(fruits.display());      <span class="comment">// Apple</span></span><br><span class="line">                                    <span class="comment">// Pear</span></span><br><span class="line">                                    <span class="comment">// Grape</span></span><br></pre></td></tr></table></figure>
+<p>Great！成功了，现在你已经可以实现一个基本的单向链表了。</p>
+<h3 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h3><p>尽管从链表的头节点遍历链表很简单，但是反过来，从后向前遍历却不容易。我们可以通过给Node类增加一个previous属性，让其指向前驱节点的链接，这样就形成了双向链表，如下图：</p>
+<p><img src="/images/2018-7-7/4.png" alt="双向路链表"></p>
+<h3 id="双向链表的实现"><a href="#双向链表的实现" class="headerlink" title="双向链表的实现"></a>双向链表的实现</h3><p>要实现双向链表，首先需要给 Node 类增加一个 previous 属性：</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//节点类</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span><span class="params">(element)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.element = element;   <span class="comment">//当前节点的元素</span></span><br><span class="line">    <span class="keyword">this</span>.next = <span class="literal">null</span>;         <span class="comment">//下一个节点链接</span></span><br><span class="line">    <span class="keyword">this</span>.previous = <span class="literal">null</span>;     <span class="comment">//上一个节点链接</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>双向链表的 insert 方法与单链表相似，但需要设置新节点的 previous 属性，使其指向该节点的前驱，定义如下：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入节点</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insert</span> </span>( <span class="keyword">new</span><span class="type">Element</span> , item ) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">new</span><span class="type">Node</span> = <span class="keyword">new</span> <span class="type">Node</span>( <span class="keyword">new</span><span class="type">Element</span> );</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.find( item );</span><br><span class="line">    <span class="keyword">new</span><span class="type">Node</span>.next = currNode.next;</span><br><span class="line">    <span class="keyword">new</span><span class="type">Node</span>.previous = currNode;</span><br><span class="line">    currNode.next = <span class="keyword">new</span><span class="type">Node</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>双向链表的删除 remove 方法比单链表效率高，不需要查找前驱节点，只要找出待删除节点，然后将该节点的前驱 next 属性指向待删除节点的后继，设置该节点后继 previous 属性，指向待删除节点的前驱即可。定义如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//删除节点</span></span><br><span class="line"></span><br><span class="line">function remove ( item ) &#123;</span><br><span class="line">    var currNode = <span class="keyword">this</span>.<span class="keyword">find</span> ( item );</span><br><span class="line">    <span class="keyword">if</span>( !( currNode.<span class="keyword">next</span> == <span class="keyword">null</span> ) )&#123;</span><br><span class="line">        currNode.<span class="keyword">previous</span>.<span class="keyword">next</span> = currNode.<span class="keyword">next</span>;</span><br><span class="line">        currNode.<span class="keyword">next</span>.<span class="keyword">previous</span> = currNode.<span class="keyword">previous</span>;</span><br><span class="line">        currNode.<span class="keyword">next</span> = <span class="keyword">null</span>;</span><br><span class="line">        currNode.<span class="keyword">previous</span> = <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>还有一些反向显示链表 dispReverse，查找链表最后一个元素 findLast 等方法，相信你已经有了思路，这里我给出一个基本双向链表的完成代码，供大家参考。</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//节点</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span></span>(element) &#123;</span><br><span class="line">    <span class="built_in">this</span>.element = element;   <span class="comment">//当前节点的元素</span></span><br><span class="line">    <span class="built_in">this</span>.next = <span class="literal">null</span>;         <span class="comment">//下一个节点链接</span></span><br><span class="line">    <span class="built_in">this</span>.previous = <span class="literal">null</span>;         <span class="comment">//上一个节点链接</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//链表类</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">LList</span> </span>() &#123;</span><br><span class="line">    <span class="built_in">this</span>.head = <span class="keyword">new</span> <span class="type">Node</span>( <span class="string">'head'</span> );</span><br><span class="line">    <span class="built_in">this</span>.find = find;</span><br><span class="line">    <span class="built_in">this</span>.findLast = findLast;</span><br><span class="line">    <span class="built_in">this</span>.insert = insert;</span><br><span class="line">    <span class="built_in">this</span>.remove = remove;</span><br><span class="line">    <span class="built_in">this</span>.display = display;</span><br><span class="line">    <span class="built_in">this</span>.dispReverse = dispReverse;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span> </span>( item ) &#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( currNode.element != item )&#123;</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> currNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//查找链表中的最后一个元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findLast</span> </span>() &#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( !( currNode.next == <span class="literal">null</span> ))&#123;</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> currNode;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//插入节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insert</span> </span>( <span class="keyword">new</span><span class="type">Element</span> , item ) &#123;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">new</span><span class="type">Node</span> = <span class="keyword">new</span> <span class="type">Node</span>( <span class="keyword">new</span><span class="type">Element</span> );</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.find( item );</span><br><span class="line">    <span class="keyword">new</span><span class="type">Node</span>.next = currNode.next;</span><br><span class="line">    <span class="keyword">new</span><span class="type">Node</span>.previous = currNode;</span><br><span class="line">    currNode.next = <span class="keyword">new</span><span class="type">Node</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//显示链表元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">display</span> </span>() &#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.head;</span><br><span class="line">    <span class="keyword">while</span> ( !(currNode.next == <span class="literal">null</span>) )&#123;</span><br><span class="line">        console.debug( currNode.next.element );</span><br><span class="line">        currNode = currNode.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//反向显示链表元素</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">dispReverse</span> </span>() &#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.findLast();</span><br><span class="line">    <span class="keyword">while</span> ( !( currNode.previous == <span class="literal">null</span> ))&#123;</span><br><span class="line">        console.log( currNode.element );</span><br><span class="line">        currNode = currNode.previous;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除节点</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">remove</span> </span>( item ) &#123;</span><br><span class="line">    <span class="keyword">var</span> currNode = <span class="built_in">this</span>.find ( item );</span><br><span class="line">    <span class="keyword">if</span>( !( currNode.next == <span class="literal">null</span> ) )&#123;</span><br><span class="line">        currNode.previous.next = currNode.next;</span><br><span class="line">        currNode.next.previous = currNode.previous;</span><br><span class="line">        currNode.next = <span class="literal">null</span>;</span><br><span class="line">        currNode.previous = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> fruits = <span class="keyword">new</span> <span class="type">LList</span>();</span><br><span class="line"></span><br><span class="line">fruits.insert(<span class="string">'Apple'</span> , <span class="string">'head'</span>);</span><br><span class="line">fruits.insert(<span class="string">'Banana'</span> , <span class="string">'Apple'</span>);</span><br><span class="line">fruits.insert(<span class="string">'Pear'</span> , <span class="string">'Banana'</span>);</span><br><span class="line">fruits.insert(<span class="string">'Grape'</span> , <span class="string">'Pear'</span>);</span><br><span class="line"></span><br><span class="line">console.log( fruits.display() );        <span class="comment">// Apple</span></span><br><span class="line">                                        <span class="comment">// Banana</span></span><br><span class="line">                                        <span class="comment">// Pear</span></span><br><span class="line">                                        <span class="comment">// Grape</span></span><br><span class="line">                                        </span><br><span class="line">console.log( fruits.dispReverse() );    <span class="comment">// Grape</span></span><br><span class="line">                                        <span class="comment">// Pear</span></span><br><span class="line">                                        <span class="comment">// Banana</span></span><br><span class="line">                                        <span class="comment">// Apple</span></span><br></pre></td></tr></table></figure>
+<h2 id="循环链表"><a href="#循环链表" class="headerlink" title="循环链表"></a>循环链表</h2><p>循环链表和单链表相似，节点类型都是一样，唯一的区别是，在创建循环链表的时候，让其头节点的 next 属性执行它本身，即</p>
+<figure class="highlight xquery"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head.<span class="keyword">next</span> =<span class="built_in"> head</span>;</span><br></pre></td></tr></table></figure>
+<p>这种行为会导致链表中每个节点的 next 属性都指向链表的头节点，换句话说，也就是链表的尾节点指向了头节点，形成了一个循环链表，如下图所示：</p>
+<p> <img src="/images/2018-7-7/5.png" alt="循环链表"></p>
+<p>原理相信你已经懂了，循环链表这里就不贴代码了，相信你自己能独立完成！</p>
+<p>至此，我们对链表有了比较深刻的认识，如果想让我们的链表更加健全，我们还可发挥自己的思维，给链表添加比如向前移动几个节点，向后移动几个节点，显示当前节点等方法，大家一起加油！ </p>
+<blockquote>
+<p>作者：<a href="https://www.jianshu.com/u/4d7dd4c7e51d" target="_blank" rel="noopener">Cryptic</a></p>
+<p>转载自掘金社区</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/05/Vue指令/" rel="next" title="Vue指令">
+                <i class="fa fa-chevron-left"></i> Vue指令
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/08/ES6-新特性总结/" rel="prev" title="ES6 新特性总结(1)">
+                ES6 新特性总结(1) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="JawnHa">
+            
+              <p class="site-author-name" itemprop="name">JawnHa</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#链表"><span class="nav-number">1.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表的定义"><span class="nav-number">2.</span> <span class="nav-text">链表的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#链表的设计"><span class="nav-number">3.</span> <span class="nav-text">链表的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向链表"><span class="nav-number">4.</span> <span class="nav-text">双向链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#双向链表的实现"><span class="nav-number">5.</span> <span class="nav-text">双向链表的实现</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#循环链表"><span class="nav-number"></span> <span class="nav-text">循环链表</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JawnHa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

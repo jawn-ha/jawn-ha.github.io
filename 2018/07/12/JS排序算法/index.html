@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="JawnHa的博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="排序算法（Sort）引言我们平时对计算机中存储的数据执行的两种最常见的操作就是排序和查找，对于计算机的排序和查找的研究，自计算机诞生以来就没有停止过。如今又是大数据，云计算的时代，对数据的排序和查找的速度、效率要求更高，因此要对排序和查找的算法进行专门的数据结构设计，以便让我们对数据的操作更加简洁高效。 这一篇我们将会介绍一些数据排序的基本算法和高级算法并利用JavaScript来逐一实现，让大伙">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS排序算法">
+<meta property="og:url" content="https://jawn-ha.github.com/2018/07/12/JS排序算法/index.html">
+<meta property="og:site_name" content="JawnHa的博客">
+<meta property="og:description" content="排序算法（Sort）引言我们平时对计算机中存储的数据执行的两种最常见的操作就是排序和查找，对于计算机的排序和查找的研究，自计算机诞生以来就没有停止过。如今又是大数据，云计算的时代，对数据的排序和查找的速度、效率要求更高，因此要对排序和查找的算法进行专门的数据结构设计，以便让我们对数据的操作更加简洁高效。 这一篇我们将会介绍一些数据排序的基本算法和高级算法并利用JavaScript来逐一实现，让大伙">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/1.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/2.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/3.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/4.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/5.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/6.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/7.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/8.png">
+<meta property="og:image" content="https://jawn-ha.github.com/images/2018-7-19/9.png">
+<meta property="og:updated_time" content="2020-06-24T07:22:51.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS排序算法">
+<meta name="twitter:description" content="排序算法（Sort）引言我们平时对计算机中存储的数据执行的两种最常见的操作就是排序和查找，对于计算机的排序和查找的研究，自计算机诞生以来就没有停止过。如今又是大数据，云计算的时代，对数据的排序和查找的速度、效率要求更高，因此要对排序和查找的算法进行专门的数据结构设计，以便让我们对数据的操作更加简洁高效。 这一篇我们将会介绍一些数据排序的基本算法和高级算法并利用JavaScript来逐一实现，让大伙">
+<meta name="twitter:image" content="https://jawn-ha.github.com/images/2018-7-19/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://jawn-ha.github.com/2018/07/12/JS排序算法/">
+
+
+
+
+
+  <title>JS排序算法 | JawnHa的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">JawnHa的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description"></h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jawn-ha.github.com/2018/07/12/JS排序算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="JawnHa">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JawnHa的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JS排序算法</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-12T18:58:36+00:00">
+                2018-07-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="排序算法（Sort）"><a href="#排序算法（Sort）" class="headerlink" title="排序算法（Sort）"></a>排序算法（Sort）</h2><h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>我们平时对计算机中存储的数据执行的两种最常见的操作就是排序和查找，对于计算机的排序和查找的研究，自计算机诞生以来就没有停止过。如今又是大数据，云计算的时代，对数据的排序和查找的速度、效率要求更高，因此要对排序和查找的算法进行专门的数据结构设计，以便让我们对数据的操作更加简洁高效。</p>
+<p>这一篇我们将会介绍一些数据排序的基本算法和高级算法并利用JavaScript来逐一实现，让大伙对计算机中常见的排序算法的思想和实现有基本的了解，起到一个抛砖引玉的作用。</p>
+<a id="more"></a>
+<h3 id="关于排序算法的说明"><a href="#关于排序算法的说明" class="headerlink" title="关于排序算法的说明"></a>关于排序算法的说明</h3><p>在介绍各个算法之前，我们有必要了解一下评估算法优劣的一些术语：</p>
+<p><strong>稳定</strong>：如果a原本在b前面，当a=b时，排序之后a仍然在b的前面<br> <strong>不稳定</strong>：如果a原本在b的前面，当a=b时，排序之后a可能会出现在b的后面</p>
+<p><strong>内排序</strong>：所有排序操作都在内存中完成<br> <strong>外排序</strong>：由于数据太大，因此把数据放在磁盘中，而排序通过磁盘和内存的数据传输才能进行</p>
+<p><strong>时间复杂度</strong>：一个算法执行所耗费的时间<br> <strong>空间复杂度</strong>：运行完一个程序所需内存的大小</p>
+<p>有想要了解更多，关于时间空间复杂度的，我推荐一篇文章，请戳<a href="https://link.jianshu.com?t=http://blog.csdn.net/booirror/article/details/7707551/" target="_blank" rel="noopener">这里</a></p>
+<h2 id="基本排序算法"><a href="#基本排序算法" class="headerlink" title="基本排序算法"></a>基本排序算法</h2><p>基本排序算法的核心思想就是对一组数据按照一定的顺序重新排序，其中重排时一般都会用到一组嵌套的 for 循环，外循环会遍历数组的每一项元素，内循环则用于进行元素直接的比较。</p>
+<p> 基本排序算法的核心思想就是对一组数据按照一定的顺序重新排序，其中重排时一般都会用到一组嵌套的 for 循环，外循环会遍历数组的每一项元素，内循环则用于进行元素直接的比较。</p>
+<p><strong>1.冒泡排序（BubbleSort）</strong></p>
+<p>冒泡排序是比较经典的算法之一，也是排序最慢的算法之一，因为它的实现是非常的容易的。</p>
+<p>冒泡排序的算法思想如下（升序排序）：</p>
+<ol>
+<li>比较相邻的元素。如果第一个比第二个大，就交换它们两个；</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样最终最大数被交换到最后的位置</li>
+<li>除了最后一个元素以外，针对所有的元素重复以上的步骤</li>
+<li><p>重复步骤1~3，直到排序完成</p>
+<p>具体的JS实现如下：</p>
+</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//冒泡排序</span></span><br><span class="line">function bubbleSort ( <span class="keyword">data</span> ) &#123;</span><br><span class="line">    <span class="keyword">var</span> temp = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> ( <span class="keyword">var</span> i = <span class="keyword">data</span>.length ; i &gt; <span class="number">0</span> ; i -- )&#123;</span><br><span class="line">        <span class="keyword">for</span>( <span class="keyword">var</span> j = <span class="number">0</span> ; j &lt; i - <span class="number">1</span> ; j++)&#123;</span><br><span class="line">           <span class="keyword">if</span>( <span class="keyword">data</span>[j] &gt; <span class="keyword">data</span>[j + <span class="number">1</span>] )&#123;</span><br><span class="line">               temp = <span class="keyword">data</span>[j];</span><br><span class="line">               <span class="keyword">data</span>[j] = <span class="keyword">data</span> [j+<span class="number">1</span>];</span><br><span class="line">               <span class="keyword">data</span>[j+<span class="number">1</span>] = temp;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 我们先设定一组数据，后面我们将都用这组数据来测试 :</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var dataStore = [ <span class="number">72</span> , <span class="number">1</span> , <span class="number">68</span> , <span class="number">95</span> , <span class="number">75</span> , <span class="number">54</span> , <span class="number">58</span> , <span class="number">10</span> , <span class="number">35</span> , <span class="number">6</span> , <span class="number">28</span> , <span class="number">45</span> , <span class="number">69</span> , <span class="number">13</span> , <span class="number">88</span> , <span class="number">99</span> , <span class="number">24</span> , <span class="number">28</span> , <span class="number">30</span> , <span class="number">31</span> , <span class="number">78</span> , <span class="number">2</span> , <span class="number">77</span> , <span class="number">82</span> , <span class="number">72</span> ];</span><br><span class="line"></span><br><span class="line">console.log( <span class="string">'原始数据:'</span> + dataStore );</span><br><span class="line">console.log( <span class="string">'冒泡排序:'</span> + bubbleSort( dataStore) );</span><br><span class="line"></span><br><span class="line"><span class="comment">// 原始数据:72,1,68,95,75,54,58,10,35,6,28,45,69,13,88,99,24,28,30,31,78,2,77,82,72</span></span><br><span class="line"><span class="comment">// 冒泡排序:1,2,6,10,13,24,28,28,30,31,35,45,54,58,68,69,72,72,75,77,78,82,88,95,99</span></span><br></pre></td></tr></table></figure>
+<p> <strong>2.选择排序（SelctionSort）</strong></p>
+<p>选择排序是一种比较简单直观的排序算法。它的算法思想是，从数组的开头开始遍历，将第一个元素和其他元素分别进行比较，记录最小的元素，等循环结束之后，将最小的元素放到数组的第一个位置上，然后从数组的第二个位置开始继续执行上述步骤。当进行到数组倒数第二个位置的时候，所有的数据就完成了排序。</p>
+<p>选择排序同样会用到嵌套循环，外循环从数组第一个位置移到倒数第二个位置；内循环从第二个位置移动到数组最后一个位置，查找比当前外循环所指向的元素还要小的元素，每次内循环结束后，都会将最小的值放到合适的位置上。</p>
+ <figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//选择排序</span><br><span class="line"><span class="function"><span class="keyword">function</span></span> selectionSort( <span class="keyword">data</span> ) &#123;</span><br><span class="line">    for( var i = <span class="number">0</span>; i&lt; <span class="keyword">data</span>.length ; i++)&#123;</span><br><span class="line">        var <span class="built_in">min</span> = <span class="keyword">data</span>[i];</span><br><span class="line">        var temp;</span><br><span class="line">        var <span class="built_in">index</span> = i;</span><br><span class="line">        for( var j = i + <span class="number">1</span>; j&lt; <span class="keyword">data</span>.length; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>( <span class="keyword">data</span>[j] &lt; <span class="built_in">min</span> )&#123;</span><br><span class="line">                <span class="built_in">min</span> = <span class="keyword">data</span>[j];</span><br><span class="line">                <span class="built_in">index</span> = j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        temp = <span class="keyword">data</span>[i];</span><br><span class="line">        <span class="keyword">data</span>[i] = <span class="built_in">min</span>;</span><br><span class="line">        <span class="keyword">data</span>[<span class="built_in">index</span>]= temp;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它的测试结果如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log( '原始数据:' + dataStore )<span class="comment">;</span></span><br><span class="line">console.log( '选择排序:' + selectionSort( dataStore) )<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// 原始数据:<span class="number">72,1,68,95</span>,<span class="number">75,54,58,10</span>,<span class="number">35,6,28,45</span>,<span class="number">69,13,88,99</span>,<span class="number">24,28,30,31</span>,<span class="number">78,2,77,82</span>,<span class="number">72</span></span><br><span class="line">// 选择排序:<span class="number">1,2,6,10</span>,<span class="number">13,24,28,28</span>,<span class="number">30,31,35,45</span>,<span class="number">54,58,68,69</span>,<span class="number">72,72,75,77</span>,<span class="number">78,82,88,95</span>,<span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p> <strong>3.插入排序（insertionSort）</strong></p>
+<p>插入排序有点类似人类按字母顺序对数据进行排序，就如同你打扑克牌一样，将摸来的扑克按大小放到合适的位置一样。它的原理就是通过嵌套循环，外循环将数组元素挨个移动，而内循环则对外循环中选中的元素及它后面的元素进行比较；如果外循环中选中的元素比内循环中选中的元素小，那么数组元素会向右移动，为内循环中的这个元素腾出位置。</p>
+<p>实现步骤如下：</p>
+<ol>
+<li>从第一个元素开始，该元素默认已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果该元素（已排序）大于新元素，将该元素移到下一位置</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置</li>
+<li><p>重复步骤2~5，直到排序完成</p>
+<p>具体实现代码如下：</p>
+</li>
+</ol>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//插入排序</span></span><br><span class="line"></span><br><span class="line">function insertionSort( <span class="keyword">data</span> ) &#123;</span><br><span class="line">    <span class="keyword">var</span> len = <span class="keyword">data</span>.length;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">        <span class="keyword">var</span> key = <span class="keyword">data</span>[i];</span><br><span class="line">        <span class="keyword">var</span> j = i - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> ( j &gt;= <span class="number">0</span> &amp;&amp; <span class="keyword">data</span>[j] &gt; key) &#123;</span><br><span class="line">            <span class="keyword">data</span>[j + <span class="number">1</span>] = <span class="keyword">data</span>[j];</span><br><span class="line">            j--;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">data</span>[j + <span class="number">1</span>] = key;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">data</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>排序结果如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log( '原始数据:' + dataStore )<span class="comment">;</span></span><br><span class="line">console.log( '插入排序:' + insertionSort( dataStore) )<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// 原始数据:<span class="number">72,1,68,95</span>,<span class="number">75,54,58,10</span>,<span class="number">35,6,28,45</span>,<span class="number">69,13,88,99</span>,<span class="number">24,28,30,31</span>,<span class="number">78,2,77,82</span>,<span class="number">72</span></span><br><span class="line">// 插入排序:<span class="number">1,2,6,10</span>,<span class="number">13,24,28,28</span>,<span class="number">30,31,35,45</span>,<span class="number">54,58,68,69</span>,<span class="number">72,72,75,77</span>,<span class="number">78,82,88,95</span>,<span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p> 我们已经学习了三种基本的排序算法，其中冒泡排序是最慢的，插入排序是最快的，我们可以在运行的过程中通过 console.time(‘sortName’) 和 console.timeEnd(‘sortName’) 两个输出来看他们的效率如何，我这里给出一组值作为参考，实际中需要大量的数据测试和反复实验，进行数理统计后才能被视为有效的统计；</p>
+<p><img src="/images/2018-7-19/1.png" alt="排序时间比较"></p>
+<h2 id="高级算法排序"><a href="#高级算法排序" class="headerlink" title="高级算法排序"></a>高级算法排序</h2><p><strong>4.希尔排序（Shell Sort）</strong></p>
+<p>我们首先要学习的就是希尔排序，又称缩小增量排序，这个算法是在插入排序的基础上做了很大的改善，与插入排序不同的是，它首先会比较位置较远的元素，而非相邻的元素。这种方案可以使离正确位置很远的元素能够快速回到合适的位置，当算法进行遍历时，所有元素的间距会不断的减小，直到数据的末尾，此时比较的就是相邻元素了。</p>
+<p>该方法的基本思想是：先将整个待排元素序列分割成若干个子序列（由相隔某个“增量”的元素组成的）分别进行直接插入排序，然后依次缩减增量再进行排序，待整个序列中的元素基本有序（增量足够小）时，再对全体元素进行一次直接插入排序。因为直接插入排序在元素基本有序的情况下（接近最好情况），效率是很高的，因此希尔排序在时间效率上有较大提高。</p>
+<p>好吧，我还是用个案例来解释，这样会更清晰，我们以下面一组数据为例：</p>
+<p><img src="/images/2018-7-19/2.png" alt="数据集"></p>
+<ul>
+<li><p>第一次 gap(增量) = 10 / 2 = 5 , 会按照下面进行分组得到五组数据（49，13）、（38，27）、（65，49）、（97，55）、（26，4），这样进行组内排序之后（13，49）、（27，38）、（49，65）、（55，97）、（4，26） </p>
+<p><img src="/images/2018-7-19/3.png" alt="第一次分组"></p>
+</li>
+</ul>
+<p>此时，数据会排成如下结构</p>
+<p><img src="/images/2018-7-19/4.png" alt="第一次排序"> </p>
+<p>  第二次 gap = 5 / 2 = 2 , 此时可以得到两个分组，如下</p>
+<p><img src="/images/2018-7-19/5.png" alt="第二次分组"></p>
+<p>再通过组内排序之后，可以得到 </p>
+<p> <img src="/images/2018-7-19/6.png" alt="第二次排序">  </p>
+<ul>
+<li>第三次 gap = 2 / 2 = 1 ， 即不用分组，进行排序后</li>
+</ul>
+<p><img src="/images/2018-7-19/7.png" alt="第三次排序"></p>
+<ul>
+<li><p>第四次 gap = 1 / 2 = 0 ，即可得到排序完成的数组 </p>
+<p><img src="/images/2018-7-19/8.png" alt="排序完成"> </p>
+<p>现在，可能对希尔排序有了一定得了解了，用JS实现如下：</p>
+</li>
+</ul>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//希尔排序</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallSort</span><span class="params">(array)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> increment = <span class="keyword">array</span>.length;</span><br><span class="line">    <span class="keyword">var</span> i</span><br><span class="line">    <span class="keyword">var</span> temp; <span class="comment">//暂存</span></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="comment">//设置增量</span></span><br><span class="line">        increment = Math.floor(increment / <span class="number">3</span>) + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (i = increment ; i &lt; <span class="keyword">array</span>.length; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> ( <span class="keyword">array</span>[i] &lt; <span class="keyword">array</span>[i - increment]) &#123;</span><br><span class="line">                temp = <span class="keyword">array</span>[i];</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">var</span> j = i - increment; j &gt;= <span class="number">0</span> &amp;&amp; temp &lt; <span class="keyword">array</span>[j]; j -= increment) &#123;</span><br><span class="line">                    <span class="keyword">array</span>[j + increment] = <span class="keyword">array</span>[j];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">array</span>[j + increment] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (increment &gt; <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">array</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log( '原始数据:' + dataStore )<span class="comment">;</span></span><br><span class="line">console.log( '希尔排序:' + shallSort( dataStore) )<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// 原始数据:<span class="number">72,1,68,95</span>,<span class="number">75,54,58,10</span>,<span class="number">35,6,28,45</span>,<span class="number">69,13,88,99</span>,<span class="number">24,28,30,31</span>,<span class="number">78,2,77,82</span>,<span class="number">72</span></span><br><span class="line">// 希尔排序:<span class="number">1,2,6,10</span>,<span class="number">13,24,28,28</span>,<span class="number">30,31,35,45</span>,<span class="number">54,58,68,69</span>,<span class="number">72,72,75,77</span>,<span class="number">78,82,88,95</span>,<span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p><strong>5.归并排序（Merge Sort）</strong></p>
+<p>将两个的有序数列合并成一个有序数列，我们称之为”归并”，归并排序的思想就是将一系列排序好的子序列合并成一个大的完整有序的序列。</p>
+<p>实现步骤如下：</p>
+<ol>
+<li>把长度为n的输入序列分成两个长度为n/2的子序列；</li>
+<li>对这两个子序列分别采用归并排序；</li>
+<li><p>将两个排序好的子序列合并成一个最终的排序序列</p>
+<p>具体的JS代码实现如下：</p>
+</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//归并排序</span></span><br><span class="line"></span><br><span class="line">function mergeSort ( array ) &#123;</span><br><span class="line">    <span class="keyword">var</span> len = array.length;</span><br><span class="line">    <span class="keyword">if</span>( len &lt; <span class="number">2</span> )&#123;</span><br><span class="line">        <span class="keyword">return</span> array;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> middle = <span class="type">Math</span>.floor(len / <span class="number">2</span>),</span><br><span class="line">        <span class="keyword">left</span> = array.slice(<span class="number">0</span>, middle),</span><br><span class="line">        <span class="keyword">right</span> = array.slice(middle);</span><br><span class="line">    <span class="keyword">return</span> merge(mergeSort(<span class="keyword">left</span>), mergeSort(<span class="keyword">right</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function merge(<span class="keyword">left</span>, <span class="keyword">right</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">var</span> result = [];</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">left</span>.length &amp;&amp; <span class="keyword">right</span>.length) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">left</span>[<span class="number">0</span>] &lt;= <span class="keyword">right</span>[<span class="number">0</span>]) &#123;</span><br><span class="line">            result.push(<span class="keyword">left</span>.shift());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result.push(<span class="keyword">right</span>.shift());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">left</span>.length)</span><br><span class="line">        result.push(<span class="keyword">left</span>.shift());</span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">right</span>.length)</span><br><span class="line">        result.push(<span class="keyword">right</span>.shift());</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果如下 ：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log( '原始数据:' + dataStore )<span class="comment">;</span></span><br><span class="line">console.log( '希尔排序:' + mergeSort( dataStore) )<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// 原始数据:<span class="number">72,1,68,95</span>,<span class="number">75,54,58,10</span>,<span class="number">35,6,28,45</span>,<span class="number">69,13,88,99</span>,<span class="number">24,28,30,31</span>,<span class="number">78,2,77,82</span>,<span class="number">72</span></span><br><span class="line">// 希尔排序:<span class="number">1,2,6,10</span>,<span class="number">13,24,28,28</span>,<span class="number">30,31,35,45</span>,<span class="number">54,58,68,69</span>,<span class="number">72,72,75,77</span>,<span class="number">78,82,88,95</span>,<span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p><strong>6.快速排序（Quicksort）</strong></p>
+<p>快速排序是处理大数据最快的排序算法之一，它也是一种分而治之的算法，通过递归方式将数据依次分解为包含较小元素和较大元素的不同子序列，会不断重复这个步骤，直到所有的序列全部为有序的，最后将这些子序列一次拼接起来，就可得到排序好的数据。</p>
+<p>该算法首先要从数列中选出一个元素作为基数（pivot）。接着所有的数据都将围绕这个基数进行，将小于改基数的元素放在它的左边，大于或等于它的数全部放在它的右边，对左右两个小数列重复上述步骤，直至各区间只有1个数。</p>
+<p>整个排序过程如下：</p>
+<p> <img src="/images/2018-7-19/9.png" alt="快速排序"></p>
+<p>具体实现如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//快速排序</span></span><br><span class="line"></span><br><span class="line">function <span class="built_in">quickSort</span>( arr )&#123;</span><br><span class="line">    <span class="keyword">if</span> ( arr.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> [];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">left</span> = [];</span><br><span class="line">    <span class="keyword">var</span> <span class="keyword">right</span> = [];</span><br><span class="line">    <span class="keyword">var</span> pivot = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt; pivot) &#123;</span><br><span class="line">            <span class="keyword">left</span>.push( arr[i] );</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">right</span>.push( arr[i] );</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">quickSort</span>( <span class="keyword">left</span> ).concat( pivot, <span class="built_in">quickSort</span>( <span class="keyword">right</span> ));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>测试结果如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">console.log( '原始数据:' + dataStore )<span class="comment">;</span></span><br><span class="line">console.log( '快速排序:' + quickSort( dataStore) )<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">// 原始数据:<span class="number">72,1,68,95</span>,<span class="number">75,54,58,10</span>,<span class="number">35,6,28,45</span>,<span class="number">69,13,88,99</span>,<span class="number">24,28,30,31</span>,<span class="number">78,2,77,82</span>,<span class="number">72</span></span><br><span class="line">// 快速排序:<span class="number">1,2,6,10</span>,<span class="number">13,24,28,28</span>,<span class="number">30,31,35,45</span>,<span class="number">54,58,68,69</span>,<span class="number">72,72,75,77</span>,<span class="number">78,82,88,95</span>,<span class="number">99</span></span><br></pre></td></tr></table></figure>
+<p>至此，我们已基本介绍过一些常见的排序算法的思想和具体实现（基数排序在之前的文章已经介绍过，想要了解<a href="https://www.jianshu.com/p/1157aaccad36" target="_blank" rel="noopener">戳这里</a>），排序算法博大精深，我们不仅要学习理论，也要不断去实践，大家加油！</p>
+<blockquote>
+<p>作者：Cryptic</p>
+<p>来源：稀土掘金</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/08/ES6-新特性总结/" rel="next" title="ES6 新特性总结(1)">
+                <i class="fa fa-chevron-left"></i> ES6 新特性总结(1)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/12/JS二叉树的遍历/" rel="prev" title="JS二叉树的遍历">
+                JS二叉树的遍历 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="JawnHa">
+            
+              <p class="site-author-name" itemprop="name">JawnHa</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#排序算法（Sort）"><span class="nav-number">1.</span> <span class="nav-text">排序算法（Sort）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#引言"><span class="nav-number">1.1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于排序算法的说明"><span class="nav-number">1.2.</span> <span class="nav-text">关于排序算法的说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本排序算法"><span class="nav-number">2.</span> <span class="nav-text">基本排序算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级算法排序"><span class="nav-number">3.</span> <span class="nav-text">高级算法排序</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JawnHa</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
